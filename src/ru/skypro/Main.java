@@ -1,11 +1,11 @@
 package ru.skypro;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Locale;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
-import static java.util.function.UnaryOperator.identity;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 
 public class Main {
 
@@ -13,6 +13,9 @@ public class Main {
         System.out.println(DuplicateEncoder.encode("Hello"));
         System.out.println(findUniq(new double[]{1, 1, 4, 1, 1, 1}));
         System.out.println(createPhoneNumber(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}));
+        //  order("is2 Thi1s T4est 3a");
+        System.out.println(validatePin("1934"));
+        System.out.println(camelCase("camelCase"));
     }
 
 
@@ -85,8 +88,83 @@ public class Main {
             if (num % i == 0) {
                 return false;
             }
-        } return true;
+        }
+        return true;
     }
+
+//    not solved
+//    public static void order(String words) { //Your task is to sort a given string.
+//        // Each word in the string will contain a single number.
+//        // This number is the position the word should have in the result.
+//        String[] split = words.split(" ");
+//        Arrays.stream(split)
+//                .filter(w -> w.replaceAll("\\D", "").length() > 0)
+//                .collect(Collectors.toMap(w -> Integer.parseInt(w.replaceAll("\\D", "")), w -> w))
+//                .forEach((k, v) -> System.out.print(v + " "));
+//    }
+
+    public static boolean validatePin(String pin) {
+        //ATM machines allow 4 or 6 digit PIN codes and PIN codes cannot contain anything
+        // but exactly 4 digits or exactly 6 digits.
+        //If the function is passed a valid PIN string, return true, else return false.
+        char[] chars = pin.toCharArray();
+        if (chars.length != 4 && chars.length != 6) {
+            return false;
+        }
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] < '0' || chars[i] > '9') {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //    public static boolean validatePin(String pin) {
+//    if (pin == null || (pin.length() != 4 && pin.length() != 6)) {
+//        return false;
+//    }
+//
+//    for (int i = 0; i < pin.length(); i++) {
+//        if (!Character.isDigit(pin.charAt(i))) {
+//            return false;
+//        }
+//    }
+//    return true;
+
+//    public static boolean validatePin(String pin) {
+//        return pin.matches("\\d{4}|\\d{6}");
+//    }
+
+    public static String camelCase(String input) {
+        //Complete the solution so that the function will break up camel casing, using a space between words.
+        String out = "";
+        for (int i=0; i<input.length(); i++) {
+            String c = Character.toString(input.charAt(i));
+            if (c.equals(c.toUpperCase())) {
+                out+=" ";
+            }
+            out+=c;
+        }
+        return out;
+    }
+    //public static String camelCase(String input) {
+    //        String result = "";
+    //        String[] array = input.split("");
+    //
+    //        for (int i = 0; i < input.length(); i++) {
+    //            if (array[i].equals(array[i].toUpperCase())) {
+    //                result += " " + array[i];
+    //            }else {
+    //                result += array[i];
+    //            }
+    //        }
+    //        return result;
+    //    }
+
+//    public static String camelCase(String input) {
+//        return input.replaceAll("([A-Z])", " $1");
+//    }
+}
 
 }
 
